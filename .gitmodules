@@ -1,6 +1,6 @@
 [submodule "components/lidar/src/rplidar_ros"]
 	path = components/lidar/src/rplidar_ros
-	url = https://github.com/Slamtec/rplidar_ros
+	url = https://github.com/Slamtec/rplidar_ros.git
 	branch = ros2-devel
 [submodule "components/microros/ros_ws/src/micro_ros_setup"]
 	path = components/microros/ros_ws/src/micro_ros_setup
@@ -8,4 +8,4 @@
 	branch = humble
 [submodule "components/rosboard/rosboard"]
 	path = components/rosboard/ros_ws/src/rosboard
-	url = https://github.com/dheera/rosboard
+	url = https://github.com/dheera/rosboard.git
