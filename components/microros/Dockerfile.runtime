@@ -1,0 +1,46 @@
+# templates/Dockerfile.builder.j2
+
+# ─── Builder Stage ────────────────────────────────────────────────────────────
+FROM docker.io/dragomirxyz/pancake_microros:builder-latest AS builder
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV ROS_DISTRO=humble
+ENV ROS_WS=/ros_ws
+
+# Install core build tools
+RUN apt-get update && apt-get install -y \
+    git \
+    python3-colcon-common-extensions \
+    sudo \
+    curl \
+    gnupg2 \
+    lsb-release \
+    udev \
+    cmake \
+    build-essential && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy in source tree
+WORKDIR /
+COPY ros_ws/src /ros_ws/src
+
+
+# Install ROS deps
+WORKDIR /ros_ws
+RUN bash -lc "\
+  source /opt/ros/${ROS_DISTRO}/setup.bash && \
+  rosdep update && \
+  rosdep install --from-paths src --ignore-src -r -y\
+"
+
+# ── postinstall commands ────────────────────────────────────────
+RUN bash -lc " \
+    source /opt/ros/humble/setup.bash && \
+    source /ros_ws/install/setup.bash && \
+    ros2 run micro_ros_setup create_agent_ws.sh \
+"
+RUN bash -lc " \
+    source /opt/ros/humble/setup.bash && \
+    source /ros_ws/install/setup.bash && \
+    ros2 run micro_ros_setup build_agent.sh \
+"

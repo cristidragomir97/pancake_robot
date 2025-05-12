@@ -1,7 +1,7 @@
 # templates/Dockerfile.builder.j2
 
 # ─── Builder Stage ────────────────────────────────────────────────────────────
-FROM dragomirxyz/robocore-humble AS builder
+FROM docker.io/dragomirxyz/robocore_humble_arm64:latest AS builder
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV ROS_DISTRO=humble
@@ -23,6 +23,11 @@ RUN apt-get update && apt-get install -y \
 # Copy in source tree
 WORKDIR /
 COPY ros_ws/src /ros_ws/src
+
+
+# … previous steps …
+
+
 
 # Install ROS deps
 WORKDIR /ros_ws

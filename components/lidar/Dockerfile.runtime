@@ -1,7 +1,7 @@
 # templates/Dockerfile.builder.j2
 
 # ─── Builder Stage ────────────────────────────────────────────────────────────
-FROM dragomirxyz/scout_lidar:builder-latest AS builder
+FROM docker.io/dragomirxyz/pancake_lidar:builder-latest AS builder
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV ROS_DISTRO=humble
@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /
 COPY ros_ws/src /ros_ws/src
 
+
 # Install ROS deps
 WORKDIR /ros_ws
 RUN bash -lc "\
@@ -31,3 +32,4 @@ RUN bash -lc "\
   rosdep update && \
   rosdep install --from-paths src --ignore-src -r -y\
 "
+

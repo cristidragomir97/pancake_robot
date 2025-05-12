@@ -5,21 +5,14 @@ ros_distro: humble
 ros_domain_id: 0
 
 # Image build & push
-image_prefix: scout                    # images: myrobot_<component>:latest
-registry: dragomirxyz
-base_image: dragomirxyz/robocore-humble
+image_prefix: pancake                    # images: myrobot_<component>:latest
+registry: docker.io/dragomirxyz
+base_image:  docker.io/dragomirxyz/robocore_humble_arm64:latest
 # Deployment mode: "image" or "live"
 deploy_mode: live
 build_dir: build
 
-
-# SSHFS live-reload settings
-sshfs_mount_root: /home/cdr/ros_builds
-sshfs_options:
-  reconnect: true
-  ServerAliveInterval: 15
-  ServerAliveCountMax: 3
-
+mount_root: /home/cdr/ros_builds
 # Where to find components
 components_dir: components
 
@@ -27,8 +20,8 @@ components_dir: components
 compose_file: docker-compose.yml
 
 # All your target hosts
-hosts:
-  - name: main_pc
-    ip:   n100.local
-    user: cdr
-    arch: amd64
+host:
+  name: raspberrypi5
+  ip: pi5.local
+  user: cdr
+  arch: arm64
